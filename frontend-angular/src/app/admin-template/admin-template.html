@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!--align to left-->
+  <span class="spacer"> </span>
+  <button mat-button (click)="gotoHome()"> Home </button>
+  <button mat-button (click)="gotoProfile()">  Profile </button>
+
+  @if (this.authService.autUserRoles.includes('ADMIN')){
+  <button mat-button [matMenuTriggerFor]="importMenu">
+    <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+    Import</button>
+  }
+
+  <mat-menu #importMenu="matMenu">
+    <button mat-menu-item (click)="gotoLoadStudent()"> Load Students</button>
+    <button mat-menu-item (click)="gotoLoadPayments()"> Load payments</button>
+  </mat-menu>
+
+  <button mat-button  >@if (this.authService.isAuthenticated) {
+
+  }{{this.authService.authUsername}}</button>
+  <button mat-button mat-raised-button color="accent" (click)="gotoLogin()"> Logout </button>
+</mat-toolbar>
+
+<mat-drawer-container>
+  <mat-drawer #drawer mode="side" position="start" opened="true">
+    <mat-nav-list>
+      <mat-list-item>
+        <button mat-button (click)="gotoDashboard()"> <mat-icon>dashboard</mat-icon>Dashboard</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button (click)="gotoStudent()" ><mat-icon>dashboard</mat-icon>Students </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button (click)="gotoPayment()"><mat-icon>dashboard</mat-icon>Payments</button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="min-height:600px">
+       <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
