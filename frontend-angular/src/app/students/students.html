@@ -11,6 +11,7 @@
          <mat-label>Search...</mat-label>
       <input matInput (change)="filterStudents($event)">
       </mat-form-field>
+
       <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z1">
 
         <ng-container matColumnDef="id">

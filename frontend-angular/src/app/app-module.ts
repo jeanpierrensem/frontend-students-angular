@@ -34,6 +34,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {Authentication} from './services/authentication';
 import {AuthGuard} from './guards/auth-guard';
 import {AuthorizationGuard} from './guards/authorization-guard';
+import {HttpClient, HttpClientModule, provideHttpClient} from '@angular/common/http';
 
 @NgModule({
   declarations: [
