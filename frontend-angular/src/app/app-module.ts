@@ -14,7 +14,7 @@ import {
   MatSidenavContent,
   MatSidenavModule,
 } from '@angular/material/sidenav';
-import {MatDivider, MatListItem, MatNavList} from '@angular/material/list';
+import { MatDivider, MatListItem, MatNavList } from '@angular/material/list';
 import { Home } from './home/home';
 import { Profile } from './profile/profile';
 import { Login } from './login/login';
@@ -23,18 +23,25 @@ import { Students } from './students/students';
 import { Payments } from './payments/payments';
 import { LoadPayments } from './load-payments/load-payments';
 import { LoadStudents } from './load-students/load-students';
-import {MatCard, MatCardContent, MatCardHeader, MatCardModule, MatCardTitle} from '@angular/material/card';
-import {MatTable, MatTableModule} from '@angular/material/table';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortHeader} from '@angular/material/sort';
-import {MatFormField, MatInput, MatInputModule, MatLabel} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {ReactiveFormsModule} from '@angular/forms';
-import {Authentication} from './services/authentication';
-import {AuthGuard} from './guards/auth-guard';
-import {AuthorizationGuard} from './guards/authorization-guard';
-import {HttpClient, HttpClientModule, provideHttpClient} from '@angular/common/http';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardModule,
+  MatCardTitle,
+} from '@angular/material/card';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Authentication } from './services/authentication';
+import { AuthGuard } from './guards/auth-guard';
+import { AuthorizationGuard } from './guards/authorization-guard';
+import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { StudentDetails } from './student-details/student-details';
 
 @NgModule({
   declarations: [
@@ -48,6 +55,7 @@ import {HttpClient, HttpClientModule, provideHttpClient} from '@angular/common/h
     Payments,
     LoadPayments,
     LoadStudents,
+    StudentDetails,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +80,8 @@ import {HttpClient, HttpClientModule, provideHttpClient} from '@angular/common/h
     MatSortHeader,
     MatInputModule,
     MatFormFieldModule,
-    MatLabel, ReactiveFormsModule
+    MatLabel,
+    ReactiveFormsModule,
   ],
   providers: [provideBrowserGlobalErrorListeners(), Authentication, AuthGuard, AuthorizationGuard],
   bootstrap: [App],

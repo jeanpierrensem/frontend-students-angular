@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import { StudentService} from '../services/students';
 
 @Component({
   selector: 'app-payments',
@@ -10,17 +11,20 @@ import {MatSort} from '@angular/material/sort';
   styleUrl: './payments.css',
   templateUrl: './payments.html',
 })
+
+
+
 export class Payments implements  OnInit{
+
   public payments! : any
   public dataSource : any
   public displayedColumns = ['id', 'date','amount', 'status', 'type', 'firstname']
   @ViewChild(MatPaginator) paginator! : MatPaginator
   @ViewChild(MatSort) sort! : MatSort
-  constructor(private httpClient : HttpClient) {}
+  constructor(private studentsService : StudentService) {}
 
     ngOnInit(): void {
-
-    this.httpClient.get("http://localhost:8787/payments").subscribe({
+    this.studentsService.getAllPayments().subscribe({
       next : value => {
          this.payments = value
          this.dataSource = new MatTableDataSource(this.payments)

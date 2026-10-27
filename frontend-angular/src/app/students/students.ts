@@ -1,14 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {DataSource} from '@angular/cdk/table';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {Router} from '@angular/router';
-interface Student {
-  id : number,
-  firstname : string,
-  lastName : string,
-}
+import { StudentService} from '../services/students';
+import {Student} from '../model/student.model';
+import {ActivatedRoute, Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-students',
@@ -17,45 +14,44 @@ interface Student {
   templateUrl: './students.html',
 })
 export class Students implements OnInit, AfterViewInit{
-   public  students : Student[] = []
-  public dataSource : any
+  public  students :any
+  public dataSource! : MatTableDataSource<Student>
   public displayedColumns = [
     "id", "firstName", "lastName", "payments"
   ]
   @ViewChild(MatPaginator) paginator! : MatPaginator
   @ViewChild(MatSort) sort : MatSort|undefined
+  //private  router = Inject(Router);
 
-  constructor(private router : Router) {
-  }
+
+
+  constructor(private router : Router, private studentService : StudentService ) {}
 
   ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator
-    if(this.sort !=undefined){
-      this.dataSource.sort = this.sort
-    }
-    }
+    // The template is rendered here
+  }
     ngOnInit(): void {
-     let st : Student
-     for(let i:number =1; i<100; i++){
-         st = {
-           id : i, firstname : Math.random().toString(20),
-           lastName : Math.random().toString(30)
+      // Inputs are available here
+
+     this.studentService.getAllStudents().subscribe( {
+       next : value => {
+         this.students = value
+         this.dataSource = new MatTableDataSource(this.students)
+         this.dataSource.paginator = this.paginator
+         if(this.sort !=undefined){
+           this.dataSource.sort = this.sort
          }
-     this.students.push(st)
-     }
-     this.dataSource = new MatTableDataSource(this.students)
-
+       },
+       error : err => { console.log(err)}
+       }
+     )
    }
-
   protected filterStudents(event: Event) {
     let val : string = (event.target as HTMLInputElement).value
     this.dataSource.filter = val
-
   }
 
-
-
-  protected gotoPayments(student: any) {
-    this.router.navigateByUrl("/payments")
+  protected gotoPayments(student: Student) {
+    this.router.navigateByUrl(`/admin/studentDetails/${student.code}`)
   }
 }
