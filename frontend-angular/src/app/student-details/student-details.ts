@@ -1,7 +1,7 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {StudentService} from '../services/students';
 import {Payment} from '../model/student.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
@@ -16,11 +16,11 @@ export class StudentDetails implements OnInit{
   public displayedColumns: string[] = ['id', 'date','amount', 'type' , 'status',  'firstname']
   private studentCode! : string
 
-  constructor(private studentService : StudentService, private activatedRoute: ActivatedRoute) {
+  constructor(private studentService : StudentService,private router : Router, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.studentCode = this.activatedRoute.snapshot.params['code']
+    this.studentCode = this.activatedRoute.snapshot.params['studentCode']
 
     this.studentService.getStudentPayments(this.studentCode).subscribe({
       next : value => {
@@ -29,9 +29,10 @@ export class StudentDetails implements OnInit{
       },
       error : err => {console.log(err)}
     });
-
   }
 
-  //protected readonly parent = parent;
+  protected newPayment() {
+      this.router.navigateByUrl(`/admin/new-payment/${this.studentCode}`)
+  }
 }
 

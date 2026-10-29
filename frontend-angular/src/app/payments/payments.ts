@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { StudentService} from '../services/students';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-payments',
@@ -21,7 +22,7 @@ export class Payments implements  OnInit{
   public displayedColumns = ['id', 'date','amount', 'status', 'type', 'firstname']
   @ViewChild(MatPaginator) paginator! : MatPaginator
   @ViewChild(MatSort) sort! : MatSort
-  constructor(private studentsService : StudentService) {}
+  constructor(private studentsService : StudentService, private router : Router) {}
 
     ngOnInit(): void {
     this.studentsService.getAllPayments().subscribe({
@@ -41,4 +42,6 @@ export class Payments implements  OnInit{
     let value: String = (event.target as HTMLInputElement).value
     this.dataSource.filter = value
   }
+
+
 }

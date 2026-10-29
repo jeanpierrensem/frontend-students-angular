@@ -42,6 +42,10 @@ import { AuthGuard } from './guards/auth-guard';
 import { AuthorizationGuard } from './guards/authorization-guard';
 import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { StudentDetails } from './student-details/student-details';
+import { NewPayment } from './new-payment/new-payment';
+import {MatDatepickerInput, MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE, MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
+import {MatSelect, MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,7 @@ import { StudentDetails } from './student-details/student-details';
     LoadPayments,
     LoadStudents,
     StudentDetails,
+    NewPayment,
   ],
   imports: [
     BrowserModule,
@@ -82,8 +87,11 @@ import { StudentDetails } from './student-details/student-details';
     MatFormFieldModule,
     MatLabel,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule
   ],
-  providers: [provideBrowserGlobalErrorListeners(), Authentication, AuthGuard, AuthorizationGuard],
+  providers: [provideBrowserGlobalErrorListeners(), provideNativeDateAdapter(), {provide : MAT_DATE_LOCALE, useValue : 'fr-FR'} ,  Authentication, AuthGuard, AuthorizationGuard],
   bootstrap: [App],
 })
 export class AppModule {}
